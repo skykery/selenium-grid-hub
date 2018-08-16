@@ -1,0 +1,20 @@
+version: '2'
+services:
+  proxy:
+    image: mattes/rotating-proxy
+    ports:
+      - "5566:5566"
+    depends_on:
+      - chrome
+  chrome:
+    image: selenium/node-chrome:3.14.0-arsenic
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+  hub:
+    image: selenium/hub:3.14.0-arsenic
+    ports:
+      - "4444:4444"
